@@ -260,7 +260,6 @@ class User extends CI_Controller
             $this->form_validation->set_rules('pb_barang_kebutuhan', 'Barang Kebutuhan', 'required');
             $this->form_validation->set_rules('pb_jumlah_barang', 'Jumlah Barang', 'required');
             $this->form_validation->set_rules('pb_drop_loc', 'Alamat Drop Barang', 'required');
-            $this->form_validation->set_rules('pb_deskripsi_tambahan', 'Catatan Tambahan', 'required');
 
 
             if ($this->form_validation->run() == false) {

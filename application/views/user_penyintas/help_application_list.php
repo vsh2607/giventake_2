@@ -29,7 +29,7 @@
                                     <th>Barang Kebutuhan</th>
                                     <th>Jumlah Barang</th>
                                     <th>Satuan</th>
-                                    <th>Tgl Apply</th>
+                                    <th>Tanggal Apply</th>
                                     <th>Status</th>
                                     <th>Detail</th>
                                 </tr>
@@ -52,10 +52,9 @@
                                             <td><span class="badge bg-danger">Denied</span></td>
                                         <?php
                                         } ?>
-                                        <td><a href="" class="btn btn-primary btn-sm">Detail</a></td>
+                                        <td><a href="<?=base_url('penyintas_minta_bantuan_detail')?>/<?=$lpb['pb_id']?>" class="btn btn-primary btn-sm">Detail</a></td>
                                     </tr>
                                 <?php endforeach; ?>
-
                             </tbody>
                         </table>
                     </div>
