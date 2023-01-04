@@ -85,6 +85,39 @@ class UserModel extends CI_Model
         }
     }
 
+    public function penyintas_get_permohonan_bantuan_list($user_id){
+        $this->db->where('penyintas_id', $user_id);
+        $result = $this->db->get('permohonan_bantuan')->result_array();
+        return $result;
+    }
+
+    //Penyintas apply bantuan
+    public function penyintas_minta_bantuan($user_id){
+
+        $jenis_bantuan = $this->input->post('pb_jenis_bantuan');
+        $barang_kebutuhan = $this->input->post('pb_barang_kebutuhan');
+        $jumlah_barang = $this->input->post('pb_jumlah_barang');
+        $satuan_barang = $this->input->post('pb_satuan_barang');
+        $drop_loc = $this->input->post('pb_drop_loc');
+        $deskripsi_tambahan = $this->input->post('pb_deskripsi_tambahan');
+
+
+        $data = [
+            'pb_deskripsi_tambahan' => $deskripsi_tambahan,
+            'pb_satuan_barang' => $satuan_barang,
+            'pb_jumlah_barang' => $jumlah_barang,
+            'pb_barang_kebutuhan' => $barang_kebutuhan,
+            'pb_status' => 'Pending',
+            'pb_drop_loc' => $drop_loc,
+            'pb_jenis_bantuan' => $jenis_bantuan,
+            'penyintas_id' => $user_id,
+            'ss_id' => 1,
+            'pb_created' => time()
+            
+        ];
+
+        $this->db->insert('permohonan_bantuan', $data);
+    }
 
     //Input user img messages  to database
     public function user_chat_img_send($user_name, $user_role, $user_id, $img_url)

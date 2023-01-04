@@ -78,11 +78,12 @@ $route['user_dashboard'] = 'User/user_dashboard';
 $route['user_chat'] = 'User/user_chat';
 $route['user_chat_text_send'] = 'User/user_chat_text_send';
 $route['user_chat_img_send'] = 'User/user_chat_img_send';
-$route['user_get_chat'] = 'User/get_chat';
+$route['user_get_chat'] = 'User/user_get_chat';
 
 //User menus for penyintas
 $route['penyintas_minta_bantuan_list'] = 'User/penyintas_minta_bantuan_list';
 $route['penyintas_minta_bantuan'] = 'User/penyintas_minta_bantuan';
+
 
 
 

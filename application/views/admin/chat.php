@@ -160,7 +160,6 @@
                 identity_role: identity_role,
                 role : role
             });
-
         });
 
         $("#msg_body").val("");
@@ -179,8 +178,6 @@
                 }
                 t--;
             }
-
-
             time2();
         });
 

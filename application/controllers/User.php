@@ -11,6 +11,7 @@ class User extends CI_Controller
         parent::__construct();
         $this->load->model('UserModel');
         $this->load->model('TestModel');
+        $this->load->library('form_validation');
     }
 
 
@@ -65,10 +66,6 @@ class User extends CI_Controller
             $this->load->view('user_' . $role . '/chat', $data);
             $this->load->view('user_' . $role . '/templates/footer');
 
-
-
-
-
             return ($data['chats']);
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
@@ -119,9 +116,6 @@ class User extends CI_Controller
         $user_id = $this->_getUserId($user_role, $user);
 
 
-
-
-
         if ($user !== null) {
 
             $config['upload_path']          = './upload/chat_img';
@@ -152,7 +146,8 @@ class User extends CI_Controller
     //Getting userdata from session
     private  function _getUserData()
     {
-        return $user_data = $this->session->userdata('user')['user'];
+        $user_data = $this->session->userdata('user')['user'];
+        return $user_data;
     }
 
 
@@ -182,7 +177,7 @@ class User extends CI_Controller
 
 
 
-    public function get_chat()
+    public function user_get_chat()
     {
 
         $user = $this->_getUserData();
@@ -257,12 +252,26 @@ class User extends CI_Controller
         $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
         $data['user_name'] = $user['identity_name'];
         $data['page_position'] = 'Form Permohonan Bantuan';
+        $user_role = $user['identity_role'];
+        $user_id = $this->_getUserId($user_role, $user);
 
         if ($user !== null) {
-            $role = $role_arr[$user['identity_role'] - 1];
-            $this->load->view('user_' . $role . '/templates/header', $data);
-            $this->load->view('user_' . $role . '/help_application', $data);
-            $this->load->view('user_' . $role . '/templates/footer');
+
+            $this->form_validation->set_rules('pb_barang_kebutuhan', 'Barang Kebutuhan', 'required');
+            $this->form_validation->set_rules('pb_jumlah_barang', 'Jumlah Barang', 'required');
+            $this->form_validation->set_rules('pb_drop_loc', 'Alamat Drop Barang', 'required');
+            $this->form_validation->set_rules('pb_deskripsi_tambahan', 'Catatan Tambahan', 'required');
+
+
+            if ($this->form_validation->run() == false) {
+                $role = $role_arr[$user['identity_role'] - 1];
+                $this->load->view('user_' . $role . '/templates/header', $data);
+                $this->load->view('user_' . $role . '/help_application', $data);
+                $this->load->view('user_' . $role . '/templates/footer');
+            }else{
+                $this->UserModel->penyintas_minta_bantuan($user_id);
+                redirect('penyintas_minta_bantuan_list');
+            }
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
             <small>Plese login first</small>
@@ -280,10 +289,13 @@ class User extends CI_Controller
         $role_arr = array('donatur', 'relawan', 'penyintas');
 
         $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
+        $user_role = $user['identity_role'];
+        $user_id = $this->_getUserId($user_role, $user);
 
         $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
         $data['user_name'] = $user['identity_name'];
         $data['page_position'] = 'List Permohonan Bantuan';
+        $data['list_permohonan_bantuan'] = $this->UserModel->penyintas_get_permohonan_bantuan_list($user_id);
 
         if ($user !== null) {
             $role = $role_arr[$user['identity_role'] - 1];

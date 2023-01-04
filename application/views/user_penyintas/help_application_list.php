@@ -5,7 +5,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title float-left"><a href="<?=base_url('penyintas_minta_bantuan')?>" class="btn btn-success btn-sm">Buat Bantuan</a></h3>
+                        <h3 class="card-title float-left"><a href="<?= base_url('penyintas_minta_bantuan') ?>" class="btn btn-success btn-sm">Buat Bantuan</a></h3>
 
                         <!-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
@@ -35,16 +35,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Barang</td>
-                                    <td>Beras</td>
-                                    <td>5</td>
-                                    <td>KG</td>
-                                    <td>11-07-2024</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                    <td><a href="" class="btn btn-primary btn-sm">Detail</a></td>
-                                </tr>
+                                <?php $no = 1;
+                                foreach ($list_permohonan_bantuan as $lpb) : ?>
+                                    <tr>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= $lpb['pb_jenis_bantuan'] ?></td>
+                                        <td><?= $lpb['pb_barang_kebutuhan'] ?></td>
+                                        <td><?= $lpb['pb_jumlah_barang'] ?></td>
+                                        <td><?= $lpb['pb_satuan_barang'] ?></td>
+                                        <td><?= date("d F y", $lpb['pb_created']) ?></td>
+                                        <?php if ($lpb['pb_status'] == 'Pending') { ?>
+                                            <td><span class="badge bg-warning">Pending</span></td>
+                                        <?php } else if ($lpb['pb_status'] == 'Accepted') { ?>
+                                            <td><span class="badge bg-success">Accepted</span></td>
+                                        <?php } else if ($lpb['pb_status'] == 'Denied') { ?>
+                                            <td><span class="badge bg-danger">Denied</span></td>
+                                        <?php
+                                        } ?>
+                                        <td><a href="" class="btn btn-primary btn-sm">Detail</a></td>
+                                    </tr>
+                                <?php endforeach; ?>
 
                             </tbody>
                         </table>
