@@ -440,4 +440,29 @@ class Admin extends CI_Controller
             redirect('admin_login');
         }
     }
+
+
+
+    public function admin_get_list_bantuan_penyintas()
+    {
+        $admin = $this->_getAdminData();
+
+
+        if ($admin !== null) {
+
+            $lists = $this->AdminModel->admin_get_list_bantuan_penyintas();
+
+            echo '<select name="bantuan_id" id="bantuan_id" class="form-control">';
+            echo '<option selected disabled>Pilih Bantuan...</option>';
+            foreach ($lists as $list) :
+                echo '<option value="'.$list['bantuan_id'].'">'.$list['bb_nama'].' - '.$list['bb_jumlah'].' '.$list['bb_satuan'].'</option>';
+            endforeach;
+            echo '</select>';
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+              <small>Plese login first</small>
+              </div>');
+            redirect('admin_login');
+        }
+    }
 }

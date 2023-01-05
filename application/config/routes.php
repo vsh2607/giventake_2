@@ -116,6 +116,7 @@ $route['admin_get_all_pengajuan_bantuan'] = 'Admin/admin_get_all_pengajuan_bantu
 $route['admin_penyintas_detail_pengajuan/(:any)'] = 'Admin/admin_penyintas_detail_pengajuan/$1';
 $route['admin_get_cek_bantuan'] = 'Admin/admin_get_cek_bantuan';
 $route['admin_reject_permohonan'] = 'Admin/admin_reject_permohonan';
+$route['admin_get_list_bantuan_penyintas'] = 'Admin/admin_get_list_bantuan_penyintas';
 
 
 

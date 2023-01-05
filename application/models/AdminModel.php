@@ -209,4 +209,18 @@ class AdminModel extends CI_Model
     }
 
 
+
+    public function admin_get_list_bantuan_penyintas(){
+        
+        $bantuan =  $this->input->post('barang');
+        
+        $this->db->select('*')->from('bantuan_barang');
+        $this->db->join('bantuan','bantuan.bb_id = bantuan_barang.bb_id');
+        $this->db->like('bb_nama', $bantuan);
+        $hasil = $this->db->get()->result_array();
+
+        return $hasil;
+    }
+
+
 }

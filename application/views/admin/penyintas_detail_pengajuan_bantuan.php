@@ -110,11 +110,11 @@
                         <br>
                         <br>
 
-                        <form action="<?=base_url('admin_reject_permohonan')?>" method="post">
+                        <form action="<?= base_url('admin_reject_permohonan') ?>" method="post">
                             <div class="form-group">
                                 <label for="">Respon</label>
                                 <input type="text" class="form-control" name="admin_respon" placeholder="Isi Respon...">
-                                <input type="hidden" name="permohonan_id" value="<?=$list_pengajuan_bantuan_penyintas->pb_id?>" >
+                                <input type="hidden" name="permohonan_id" value="<?= $list_pengajuan_bantuan_penyintas->pb_id ?>">
                             </div>
 
 
@@ -123,12 +123,12 @@
 
                     <div class="card-footer">
 
-                        <a href="#"  id="cek_btn" class="btn btn-primary btn-sm">Cek Ketersediaan Barang</a>
+                        <a href="#" id="cek_btn" class="btn btn-primary btn-sm">Cek Ketersediaan Barang</a>
                         <button type="submit" class="btn btn-danger btn-sm">Tolak</button>
-                        <a href="#" class="btn btn-success btn-sm">Buat Task</a>
+                        <a href="#" id="create_task" data-toggle="modal" data-target="#create_task_modal" class="btn btn-success btn-sm">Buat Task</a>
                     </div>
-                    
-                </form>
+
+                    </form>
 
                 </div>
                 <!-- /.card -->
@@ -141,10 +141,10 @@
 </div>
 
 
-<!-- List Bantuan Modal-->
-<div class="modal fade" id="bantuan_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Buat Task Modal-->
+<div class="modal fade" id="create_task_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">List Bantuan</h5>
@@ -154,13 +154,34 @@
             </div>
 
             <div class="modal-body" id="list_bantuan">
-              
+                <form action="" method="post">
+                    <div class="form-group">
+                        <label for="identity_name">Nama Pemohon</label>
+                        <input type="text" class="form-control" id="identity_name" name="identity_name" value="<?= $list_pengajuan_bantuan_penyintas->identity_name ?>" readonly>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="bantuan_id">List Bantuan</label>
+                        <div id="list_bantuan_tersedia">
+
+                        </div>
+                        
+                    </div>
+
+
+
+
+
             </div>
 
             <div class="modal-footer">
 
-                <button class="btn btn-secondary btn-sm" id="img_msg_send_button" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success btn-sm" id="create_task_btn" type="button">Create Task</button>
             </div>
+            </form>
 
             </form>
 
@@ -173,18 +194,30 @@
 <!-- /.content-wrapper -->
 
 
-    <script>
-        $(document).ready(function(){
-            $("#cek_btn").on('click', function(){
-                var barang = document.getElementById('barang_kebutuhan').value;
-                 $.post('<?=base_url('admin_get_cek_bantuan')?>', {barang : barang}, 
-                 function(data, status){
-                    alert(data);
-                 });
-           
-            });
+<script>
+    $(document).ready(function() {
+        $("#cek_btn").on('click', function() {
+            var barang = document.getElementById('barang_kebutuhan').value;
+            $.post('<?= base_url('admin_get_cek_bantuan') ?>', {
+                    barang: barang
+                },
+                function(data, status) {
+
+                });
         });
-    </script>
+
+
+        $("#create_task").on('click', function() {
+            var barang = document.getElementById('barang_kebutuhan').value;
+            $.post('<?= base_url('admin_get_list_bantuan_penyintas') ?>', {
+                    barang: barang
+                },
+                function(data, status) {
+                    $("#list_bantuan_tersedia").html(data);
+                });
+        });
+    });
+</script>
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
