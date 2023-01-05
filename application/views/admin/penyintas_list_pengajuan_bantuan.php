@@ -40,7 +40,7 @@
                                             <?php } else if ($lpbp['pb_status'] == 'Denied') { ?>
                                                 <span class="badge bg-danger">Denied</span>
                                             <?php } else if ($lpbp['pb_status'] == 'Accepted') { ?>
-                                                <span class="badge bg-danger">Accepted</span>
+                                                <span class="badge bg-success">Accepted</span>
                                             <?php } ?>
                                         </td>
                                         <td><a href="<?= base_url('admin_penyintas_detail_pengajuan') ?>/<?= $lpbp['pb_id'] ?>" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">

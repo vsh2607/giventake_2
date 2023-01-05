@@ -369,4 +369,24 @@ class Admin extends CI_Controller
         }
     }
 
+
+    public function admin_get_cek_bantuan(){
+
+
+        $admin = $this->_getAdminData();
+
+
+        if ($admin !== null) {
+            $hasil =  $this->AdminModel->cek_bantuan();
+            echo $hasil;
+           
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+              <small>Plese login first</small>
+              </div>');
+            redirect('admin_login');
+        }
+      
+    }
+
 }

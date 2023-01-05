@@ -88,6 +88,9 @@ $route['penyintas_minta_bantuan'] = 'User/penyintas_minta_bantuan';
 
 
 
+
+
+
 //Admin menus
 $route['admin_dashboard'] = 'Admin/admin_dashboard';
 $route['admin_chat/(:any)/(:any)/(:any)'] = 'Admin/admin_chat/$1/$2/$3';
@@ -105,6 +108,7 @@ $route['admin_chat_img_send/(:any)/(:any)'] = 'Admin/admin_chat_img_send/$1/$2';
 $route['admin_list_pengajuan_bantuan'] = 'Admin/admin_list_pengajuan_bantuan';
 $route['admin_get_all_pengajuan_bantuan'] = 'Admin/admin_get_all_pengajuan_bantuan';
 $route['admin_penyintas_detail_pengajuan/(:any)'] = 'Admin/admin_penyintas_detail_pengajuan/$1';
+$route['admin_get_cek_bantuan'] = 'Admin/admin_get_cek_bantuan';
 
 
 // $route['method/(:any)/(:any)'] = 'controller/method/$1/$2';

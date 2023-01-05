@@ -157,9 +157,20 @@ class AdminModel extends CI_Model
         $this->db->where('pb_id', $noIdPengajuan);
         $result = $this->db->get()->row();
 
-       
+
 
 
         return $result;
+    }
+
+
+
+    public function cek_bantuan()
+    {
+        $bantuan = $this->input->post('barang');
+
+        $this->db->like('pb_barang_bantuan', $bantuan);
+        $total = $this->db->count_all_results('permohonan_bantuan');
+        return $bantuan;
     }
 }

@@ -86,6 +86,7 @@
                                 <tr>
                                     <td class="tg-3m6e">Barang Bantuan</td>
                                     <td class="tg-c1kk">:</td>
+                                    <input type="hidden" value="<?= $list_pengajuan_bantuan_penyintas->pb_barang_kebutuhan ?>" id="barang_kebutuhan">
                                     <td class="tg-oe15"><b><?= $list_pengajuan_bantuan_penyintas->pb_barang_kebutuhan ?></b></td>
                                 </tr>
                                 <tr>
@@ -121,7 +122,7 @@
 
                     <div class="card-footer">
 
-                        <a href="#" class="btn btn-primary btn-sm">Cek Ketersediaan Barang</a>
+                        <a href="#" data-toggle="modal" data-target="#bantuan_modal" id="cek_btn" class="btn btn-primary btn-sm">Cek Ketersediaan Barang</a>
                         <a href="#" class="btn btn-danger btn-sm">Tolak</a>
                         <a href="#" class="btn btn-success btn-sm">Buat Task</a>
                     </div>
@@ -137,9 +138,51 @@
     </div>
     <!-- /.container-fluid -->
 </div>
+
+
+<!-- List Bantuan Modal-->
+<div class="modal fade" id="bantuan_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">List Bantuan</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body" id="list_bantuan">
+              
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary btn-sm" id="img_msg_send_button" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+
+    <script>
+        $(document).ready(function(){
+            $("#cek_btn").on('click', function(){
+                var barang = document.getElementById('barang_kebutuhan').value;
+
+                $("#list_bantuan").load('<?=base_url('admin_get_cek_bantuan')?>', {
+                    barang : barang
+                });
+            });
+        });
+    </script>
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
