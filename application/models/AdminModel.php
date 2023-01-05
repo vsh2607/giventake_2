@@ -167,10 +167,46 @@ class AdminModel extends CI_Model
 
     public function cek_bantuan()
     {
-        $bantuan = $this->input->post('barang');
+        $bantuan =  $this->input->post('barang');
+        
+        $this->db->like('bb_nama', $bantuan);
+        $total = $this->db->count_all_results('bantuan_barang');
+        
 
-        $this->db->like('pb_barang_bantuan', $bantuan);
-        $total = $this->db->count_all_results('permohonan_bantuan');
-        return $bantuan;
+        // $this->db->select('*')->from('bantuan_barang');
+        // $this->db->join('bantuan','bantuan.bb_id = bantuan_barang.bb_id');
+        // $this->db->like('bb_nama', $bantuan);
+        // $hasil = $this->db->get('bantuan_barang')->result_array();
+        
+
+        
+        return $total ;
     }
+
+
+    public function get_list_bantuan_donatur(){
+        $this->db->select('*')->from('bantuan_barang');
+        $this->db->join('bantuan', 'bantuan.bb_id = bantuan_barang.bb_id');
+        $this->db->join('identity', 'identity.donatur_id = bantuan.donatur_id');
+        $result = $this->db->get()->result_array();
+
+        return $result;
+    }
+
+
+
+    public function admin_reject_permohonan(){
+        $admin_respon = $this->input->post('admin_respon');
+        $permohonan_id = $this->input->post('permohonan_id');
+
+        $data = [
+            'pb_jawaban' => $admin_respon,
+            'pb_status' => 'Denied'
+        ];
+       $this->db->where('pb_id', $permohonan_id);
+       $this->db->update('permohonan_bantuan', $data);
+
+    }
+
+
 }

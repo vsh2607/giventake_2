@@ -196,4 +196,54 @@ class UserModel extends CI_Model
         $total = $this->db->count_all_results('identity');
         return $total;
     }
+
+
+
+
+    public function donatur_beri_bantuan($donatur_id){
+        $tipe_bantuan = $this->input->post('bantuan_type');
+        $jenis_bantuan = $this->input->post('bb_jenis');
+        $nama_bantuan = $this->input->post('bb_nama');
+        $jumlah_bantuan = $this->input->post('bb_jumlah');
+        $satuan_bantuan = $this->input->post('bb_satuan');
+        $alamat_pickup_bantuan = $this->input->post('bb_pickup_loc');
+
+        $data = [
+            'bb_jenis' => $jenis_bantuan,
+            'bb_nama' => $nama_bantuan,
+            'bb_satuan' => $satuan_bantuan,
+            'bb_jumlah' => $jumlah_bantuan,
+            'bb_pickup_loc' => $alamat_pickup_bantuan
+        ];
+
+        $this->db->insert('bantuan_barang', $data);
+
+
+        $this->db->order_by('bb_id', 'DESC');
+        $latestIput = $this->db->get('bantuan_barang')->row();
+
+        $data_barang = [
+            'bantuan_type' => $tipe_bantuan,
+            'bantuan_status' => 'Disimpan',
+            'donatur_id' => $donatur_id,
+            'ss_id' => 1,
+            'bb_id' =>  $latestIput->bb_id
+
+        ];
+
+
+        $this->db->insert('bantuan', $data_barang);
+
+        
+    }
+
+
+    public function get_list_bantuan_donatur($user_id){
+        $this->db->select('*')->from('bantuan_barang');
+        $this->db->join('bantuan', 'bantuan_barang.bb_id = bantuan.bb_id');
+        $this->db->where('bantuan.donatur_id', $user_id);
+        $result = $this->db->get()->result_array();
+
+        return $result;
+    }
 }

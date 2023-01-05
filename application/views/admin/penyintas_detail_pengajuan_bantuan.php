@@ -110,10 +110,11 @@
                         <br>
                         <br>
 
-                        <form action="" method="post">
+                        <form action="<?=base_url('admin_reject_permohonan')?>" method="post">
                             <div class="form-group">
                                 <label for="">Respon</label>
-                                <input type="text" class="form-control" placeholder="Isi Respon...">
+                                <input type="text" class="form-control" name="admin_respon" placeholder="Isi Respon...">
+                                <input type="hidden" name="permohonan_id" value="<?=$list_pengajuan_bantuan_penyintas->pb_id?>" >
                             </div>
 
 
@@ -122,12 +123,12 @@
 
                     <div class="card-footer">
 
-                        <a href="#" data-toggle="modal" data-target="#bantuan_modal" id="cek_btn" class="btn btn-primary btn-sm">Cek Ketersediaan Barang</a>
-                        <a href="#" class="btn btn-danger btn-sm">Tolak</a>
+                        <a href="#"  id="cek_btn" class="btn btn-primary btn-sm">Cek Ketersediaan Barang</a>
+                        <button type="submit" class="btn btn-danger btn-sm">Tolak</button>
                         <a href="#" class="btn btn-success btn-sm">Buat Task</a>
                     </div>
-
-                    </form>
+                    
+                </form>
 
                 </div>
                 <!-- /.card -->
@@ -176,10 +177,11 @@
         $(document).ready(function(){
             $("#cek_btn").on('click', function(){
                 var barang = document.getElementById('barang_kebutuhan').value;
-
-                $("#list_bantuan").load('<?=base_url('admin_get_cek_bantuan')?>', {
-                    barang : barang
-                });
+                 $.post('<?=base_url('admin_get_cek_bantuan')?>', {barang : barang}, 
+                 function(data, status){
+                    alert(data);
+                 });
+           
             });
         });
     </script>

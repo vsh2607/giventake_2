@@ -263,7 +263,7 @@ class User extends CI_Controller
                 $this->load->view('user_' . $role . '/templates/header', $data);
                 $this->load->view('user_' . $role . '/help_application', $data);
                 $this->load->view('user_' . $role . '/templates/footer');
-            }else{
+            } else {
                 $this->UserModel->penyintas_minta_bantuan($user_id);
                 redirect('penyintas_minta_bantuan_list');
             }
@@ -297,6 +297,80 @@ class User extends CI_Controller
             $this->load->view('user_' . $role . '/templates/header', $data);
             $this->load->view('user_' . $role . '/help_application_list', $data);
             $this->load->view('user_' . $role . '/templates/footer');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            <small>Plese login first</small>
+            </div>');
+            redirect('user_login');
+        }
+    }
+
+
+
+    public function donatur_beri_bantuan_list()
+    {
+        $user = $this->_getUserData();
+        $role_arr = array('donatur', 'relawan', 'penyintas');
+
+        $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
+        $user_role = $user['identity_role'];
+        $user_id = $this->_getUserId($user_role, $user);
+
+        $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
+        $data['user_name'] = $user['identity_name'];
+        $data['page_position'] = 'List Bantuan Donatur';
+
+        if ($user !== null) {
+
+            $user_role = $user['identity_role'];
+            $user_id = $this->_getUserId($user_role, $user);
+            $data['list_bantuan_donatur'] = $this->UserModel->get_list_bantuan_donatur($user_id);
+
+
+            $role = $role_arr[$user['identity_role'] - 1];
+            $this->load->view('user_' . $role . '/templates/header', $data);
+            $this->load->view('user_' . $role . '/donatur_give_help_list', $data);
+            $this->load->view('user_' . $role . '/templates/footer');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            <small>Plese login first</small>
+            </div>');
+            redirect('user_login');
+        }
+    }
+
+
+
+    public function donatur_beri_bantuan()
+    {
+        $user = $this->_getUserData();
+        $role_arr = array('donatur', 'relawan', 'penyintas');
+
+        $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
+        $user_role = $user['identity_role'];
+        $user_id = $this->_getUserId($user_role, $user);
+
+        $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
+        $data['user_name'] = $user['identity_name'];
+        $data['page_position'] = 'Form Beri Bantuan';
+        $user_role = $user['identity_role'];
+        $user_id = $this->_getUserId($user_role, $user);
+
+        if ($user !== null) {
+
+            $this->form_validation->set_rules('bb_nama', 'Nama Barang', 'required');
+            $this->form_validation->set_rules('bb_pickup_loc', 'Alamat Pick Up', 'required');
+            $this->form_validation->set_rules('bb_jumlah', 'Jumlah Barang', 'required');
+
+            if ($this->form_validation->run() == false) {
+                $role = $role_arr[$user['identity_role'] - 1];
+                $this->load->view('user_' . $role . '/templates/header', $data);
+                $this->load->view('user_' . $role . '/donatur_give_help_form', $data);
+                $this->load->view('user_' . $role . '/templates/footer');
+            } else {
+                $this->UserModel->donatur_beri_bantuan($user_id);
+                redirect('donatur_beri_bantuan_list');
+            }
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
             <small>Plese login first</small>

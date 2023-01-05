@@ -343,8 +343,9 @@ class Admin extends CI_Controller
     }
 
 
-    public function admin_penyintas_detail_pengajuan($noIdPengajuan){
-        
+    public function admin_penyintas_detail_pengajuan($noIdPengajuan)
+    {
+
         $admin = $this->_getAdminData();
 
 
@@ -370,23 +371,73 @@ class Admin extends CI_Controller
     }
 
 
-    public function admin_get_cek_bantuan(){
+    public function admin_get_cek_bantuan()
+    {
 
 
         $admin = $this->_getAdminData();
 
 
         if ($admin !== null) {
-            $hasil =  $this->AdminModel->cek_bantuan();
-            echo $hasil;
-           
+
+            $hasil = $this->AdminModel->cek_bantuan();
+            if ($hasil == 0) {
+                echo "Tidak ada bantuan";
+            } else {
+                echo "Terdapat " . $hasil . " bantuan";
+            }
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
               <small>Plese login first</small>
               </div>');
             redirect('admin_login');
         }
-      
     }
 
+
+
+
+    public function admin_list_bantuan_donatur()
+    {
+
+
+
+        $admin = $this->_getAdminData();
+        $data['admin_name'] = $admin['ss_name'];
+        $data['page_position'] = 'List Bantuan Donatur';
+        $data['total_donatur'] = $this->UserModel->getTotalDonatur();
+        $data['total_relawan'] = $this->UserModel->getTotalDonatur();
+        $data['total_penyintas'] = $this->UserModel->getTotalPenyintas();
+
+        $data['list_bantuan_donatur'] = $this->AdminModel->get_list_bantuan_donatur();
+
+        if ($admin !== null) {
+            $this->load->view('admin/templates/header', $data);
+            $this->load->view('admin/donatur_list_beri_bantuan', $data);
+            $this->load->view('admin/templates/footer');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+              <small>Plese login first</small>
+              </div>');
+            redirect('admin_login');
+        }
+    }
+
+    public function admin_reject_permohonan()
+    {
+
+        $admin = $this->_getAdminData();
+
+
+        if ($admin !== null) {
+
+            $this->AdminModel->admin_reject_permohonan();
+            redirect('admin_list_pengajuan_bantuan');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+              <small>Plese login first</small>
+              </div>');
+            redirect('admin_login');
+        }
+    }
 }

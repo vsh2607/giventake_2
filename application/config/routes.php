@@ -86,6 +86,12 @@ $route['penyintas_minta_bantuan'] = 'User/penyintas_minta_bantuan';
 
 
 
+//User menus for donatur
+$route['donatur_beri_bantuan_list'] = 'User/donatur_beri_bantuan_list';
+$route['donatur_beri_bantuan'] = 'User/donatur_beri_bantuan';
+
+
+
 
 
 
@@ -109,6 +115,14 @@ $route['admin_list_pengajuan_bantuan'] = 'Admin/admin_list_pengajuan_bantuan';
 $route['admin_get_all_pengajuan_bantuan'] = 'Admin/admin_get_all_pengajuan_bantuan';
 $route['admin_penyintas_detail_pengajuan/(:any)'] = 'Admin/admin_penyintas_detail_pengajuan/$1';
 $route['admin_get_cek_bantuan'] = 'Admin/admin_get_cek_bantuan';
+$route['admin_reject_permohonan'] = 'Admin/admin_reject_permohonan';
+
+
+
+//Admin-donatur menu
+$route['admin_list_bantuan_donatur']  = 'Admin/admin_list_bantuan_donatur';
+
+
 
 
 // $route['method/(:any)/(:any)'] = 'controller/method/$1/$2';

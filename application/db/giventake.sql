@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2023 at 07:45 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 7.4.33
+-- Waktu pembuatan: 05 Jan 2023 pada 04.36
+-- Versi server: 10.4.6-MariaDB
+-- Versi PHP: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -24,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bantuan`
+-- Struktur dari tabel `bantuan`
 --
 
 CREATE TABLE `bantuan` (
@@ -34,13 +35,23 @@ CREATE TABLE `bantuan` (
   `donatur_id` int(11) NOT NULL,
   `ss_id` int(11) NOT NULL,
   `bb_id` int(11) NOT NULL,
-  `bu_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `bu_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `bantuan`
+--
+
+INSERT INTO `bantuan` (`bantuan_id`, `bantuan_type`, `bantuan_status`, `donatur_id`, `ss_id`, `bb_id`, `bu_id`) VALUES
+(1, 'Barang', 'Disimpan', 7, 1, 2, NULL),
+(2, 'Barang', 'Disimpan', 7, 1, 3, NULL),
+(3, 'Barang', 'Disimpan', 7, 1, 4, NULL),
+(4, 'Barang', 'Disimpan', 7, 1, 5, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bantuan_barang`
+-- Struktur dari tabel `bantuan_barang`
 --
 
 CREATE TABLE `bantuan_barang` (
@@ -49,14 +60,24 @@ CREATE TABLE `bantuan_barang` (
   `bb_nama` varchar(128) NOT NULL,
   `bb_satuan` varchar(128) NOT NULL,
   `bb_jumlah` int(11) NOT NULL,
-  `bb_img_attachement` varchar(256) NOT NULL,
+  `bb_img_attachement` varchar(256) DEFAULT NULL,
   `bb_pickup_loc` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `bantuan_barang`
+--
+
+INSERT INTO `bantuan_barang` (`bb_id`, `bb_jenis`, `bb_nama`, `bb_satuan`, `bb_jumlah`, `bb_img_attachement`, `bb_pickup_loc`) VALUES
+(2, 'Pakaian', 'Celana', 'Helai', 2, NULL, 'Jakarta Utara'),
+(3, 'Minuman', 'Coca-Cola', 'Botol', 2, NULL, 'Jakarta Utara'),
+(4, 'Makanan', 'Beras', 'KG', 2, NULL, 'Jakarta Utara'),
+(5, 'Makanan', 'Beras Matii', 'Karung', 123, NULL, 'Jakarta Utara');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bantuan_uang`
+-- Struktur dari tabel `bantuan_uang`
 --
 
 CREATE TABLE `bantuan_uang` (
@@ -64,21 +85,21 @@ CREATE TABLE `bantuan_uang` (
   `bu_nominal` int(11) NOT NULL,
   `bu_img_proof` varchar(256) NOT NULL,
   `bu_bank` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `donatur`
+-- Struktur dari tabel `donatur`
 --
 
 CREATE TABLE `donatur` (
   `id` int(11) NOT NULL,
   `status` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `donatur`
+-- Dumping data untuk tabel `donatur`
 --
 
 INSERT INTO `donatur` (`id`, `status`) VALUES
@@ -87,7 +108,7 @@ INSERT INTO `donatur` (`id`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `identity`
+-- Struktur dari tabel `identity`
 --
 
 CREATE TABLE `identity` (
@@ -104,10 +125,10 @@ CREATE TABLE `identity` (
   `penyintas_id` int(11) DEFAULT NULL,
   `identity_role` int(11) NOT NULL,
   `identity_is_active` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `identity`
+-- Dumping data untuk tabel `identity`
 --
 
 INSERT INTO `identity` (`identity_id`, `identity_name`, `identity_created`, `identity_username`, `identity_password`, `identity_email`, `identity_address`, `identity_phone_number`, `relawan_id`, `donatur_id`, `penyintas_id`, `identity_role`, `identity_is_active`) VALUES
@@ -118,7 +139,7 @@ INSERT INTO `identity` (`identity_id`, `identity_name`, `identity_created`, `ide
 -- --------------------------------------------------------
 
 --
--- Table structure for table `message`
+-- Struktur dari tabel `message`
 --
 
 CREATE TABLE `message` (
@@ -133,10 +154,10 @@ CREATE TABLE `message` (
   `penyintas_id` int(11) DEFAULT NULL,
   `ss_id` int(11) NOT NULL,
   `msg_is_opened` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `message`
+-- Dumping data untuk tabel `message`
 --
 
 INSERT INTO `message` (`msg_id`, `msg_body`, `msg_created`, `msg_is_attached`, `msg_sender`, `msg_attachement`, `relawan_id`, `donatur_id`, `penyintas_id`, `ss_id`, `msg_is_opened`) VALUES
@@ -805,22 +826,31 @@ INSERT INTO `message` (`msg_id`, `msg_body`, `msg_created`, `msg_is_attached`, `
 (812, NULL, 1672787396, 0, 'admin', NULL, NULL, NULL, NULL, 1, 0),
 (813, NULL, 1672787397, 0, 'admin', NULL, NULL, NULL, NULL, 1, 0),
 (814, 'halo', 1672788879, 0, 'admin', NULL, NULL, NULL, 1, 1, 0),
-(815, 'siapa ini??', 1672788885, 0, 'admin', NULL, NULL, NULL, 1, 1, 0);
+(815, 'siapa ini??', 1672788885, 0, 'admin', NULL, NULL, NULL, 1, 1, 0),
+(816, 'halo', 1672827229, 0, 'Narumi', NULL, NULL, NULL, 1, 1, 0),
+(817, 'trus?', 1672827264, 0, 'Narumi', NULL, NULL, NULL, 1, 1, 0),
+(818, NULL, 1672827279, 1, 'Narumi', 'item-230104-93d818f915.JPG', NULL, NULL, 1, 1, 0),
+(819, NULL, 1672827299, 1, 'Narumi', 'item-230104-f1e581c544.JPG', NULL, NULL, 1, 1, 0),
+(820, '', 1672827395, 0, 'admin', NULL, NULL, NULL, 1, 1, 0),
+(821, '', 1672827397, 0, 'admin', NULL, NULL, NULL, 1, 1, 0),
+(822, '', 1672827417, 0, 'admin', NULL, NULL, NULL, 1, 1, 0),
+(823, '', 1672827419, 0, 'admin', NULL, NULL, NULL, 1, 1, 0),
+(824, '', 1672827420, 0, 'admin', NULL, NULL, NULL, 1, 1, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migi`
+-- Struktur dari tabel `migi`
 --
 
 CREATE TABLE `migi` (
   `id` int(11) NOT NULL,
   `nama` varchar(256) NOT NULL,
   `kelas` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `migi`
+-- Dumping data untuk tabel `migi`
 --
 
 INSERT INTO `migi` (`id`, `nama`, `kelas`) VALUES
@@ -842,17 +872,17 @@ INSERT INTO `migi` (`id`, `nama`, `kelas`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `penyintas`
+-- Struktur dari tabel `penyintas`
 --
 
 CREATE TABLE `penyintas` (
   `id` int(11) NOT NULL,
   `penyintas_no_rek` varchar(256) DEFAULT NULL,
   `status` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `penyintas`
+-- Dumping data untuk tabel `penyintas`
 --
 
 INSERT INTO `penyintas` (`id`, `penyintas_no_rek`, `status`) VALUES
@@ -861,7 +891,7 @@ INSERT INTO `penyintas` (`id`, `penyintas_no_rek`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permohonan_bantuan`
+-- Struktur dari tabel `permohonan_bantuan`
 --
 
 CREATE TABLE `permohonan_bantuan` (
@@ -879,28 +909,30 @@ CREATE TABLE `permohonan_bantuan` (
   `penyintas_id` int(11) NOT NULL,
   `ss_id` int(11) NOT NULL,
   `pb_created` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `permohonan_bantuan`
+-- Dumping data untuk tabel `permohonan_bantuan`
 --
 
 INSERT INTO `permohonan_bantuan` (`pb_id`, `pb_deskripsi_tambahan`, `pb_tingkat_urgensi`, `pb_satuan_barang`, `pb_jumlah_barang`, `pb_jumlah_donasi`, `pb_barang_kebutuhan`, `pb_status`, `pb_jawaban`, `pb_drop_loc`, `pb_jenis_bantuan`, `penyintas_id`, `ss_id`, `pb_created`) VALUES
-(1, 'Bawa', NULL, 'KG', 3, NULL, 'Beras', 'Menunggu Konfirmasi', NULL, 'Universitas Kristen Immanuel, Kalasan, Yogyakarta', NULL, 1, 1, 0);
+(3, 'Tolong di tambah es', NULL, 'Gelas', 122, NULL, 'Air Minum', 'Accepted', NULL, 'Kalasan, Yogyakarta', 'Barang', 1, 1, 1672830865),
+(4, '', NULL, 'KG', 2, NULL, 'Beras', 'Pending', NULL, 'Kaliurang, RT 01, RW 17', 'Barang', 1, 1, 1672831104),
+(5, '', NULL, 'Kardus', 23, NULL, 'Obat Batuk', 'Denied', NULL, 'No where', 'Barang', 1, 1, 1672831287);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `relawan`
+-- Struktur dari tabel `relawan`
 --
 
 CREATE TABLE `relawan` (
   `id` int(11) NOT NULL,
   `status` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `relawan`
+-- Dumping data untuk tabel `relawan`
 --
 
 INSERT INTO `relawan` (`id`, `status`) VALUES
@@ -910,7 +942,7 @@ INSERT INTO `relawan` (`id`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ss`
+-- Struktur dari tabel `ss`
 --
 
 CREATE TABLE `ss` (
@@ -918,10 +950,10 @@ CREATE TABLE `ss` (
   `ss_password` varchar(256) NOT NULL,
   `ss_name` varchar(128) NOT NULL,
   `ss_username` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ss`
+-- Dumping data untuk tabel `ss`
 --
 
 INSERT INTO `ss` (`ss_id`, `ss_password`, `ss_name`, `ss_username`) VALUES
@@ -930,7 +962,7 @@ INSERT INTO `ss` (`ss_id`, `ss_password`, `ss_name`, `ss_username`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `task`
+-- Struktur dari tabel `task`
 --
 
 CREATE TABLE `task` (
@@ -941,12 +973,12 @@ CREATE TABLE `task` (
   `ss_id` int(11) NOT NULL,
   `bantuan_id` int(11) NOT NULL,
   `pb_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `token`
+-- Struktur dari tabel `token`
 --
 
 CREATE TABLE `token` (
@@ -954,10 +986,10 @@ CREATE TABLE `token` (
   `tkn_email` varchar(256) NOT NULL,
   `tkn_token` varchar(256) NOT NULL,
   `tkn_created` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `token`
+-- Dumping data untuk tabel `token`
 --
 
 INSERT INTO `token` (`tkn_id`, `tkn_email`, `tkn_token`, `tkn_created`) VALUES
@@ -970,7 +1002,7 @@ INSERT INTO `token` (`tkn_id`, `tkn_email`, `tkn_token`, `tkn_created`) VALUES
 --
 
 --
--- Indexes for table `bantuan`
+-- Indeks untuk tabel `bantuan`
 --
 ALTER TABLE `bantuan`
   ADD PRIMARY KEY (`bantuan_id`),
@@ -980,25 +1012,25 @@ ALTER TABLE `bantuan`
   ADD KEY `bu_id` (`bu_id`);
 
 --
--- Indexes for table `bantuan_barang`
+-- Indeks untuk tabel `bantuan_barang`
 --
 ALTER TABLE `bantuan_barang`
   ADD PRIMARY KEY (`bb_id`);
 
 --
--- Indexes for table `bantuan_uang`
+-- Indeks untuk tabel `bantuan_uang`
 --
 ALTER TABLE `bantuan_uang`
   ADD PRIMARY KEY (`bu_id`);
 
 --
--- Indexes for table `donatur`
+-- Indeks untuk tabel `donatur`
 --
 ALTER TABLE `donatur`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `identity`
+-- Indeks untuk tabel `identity`
 --
 ALTER TABLE `identity`
   ADD PRIMARY KEY (`identity_id`),
@@ -1007,7 +1039,7 @@ ALTER TABLE `identity`
   ADD KEY `penyintas_id` (`penyintas_id`);
 
 --
--- Indexes for table `message`
+-- Indeks untuk tabel `message`
 --
 ALTER TABLE `message`
   ADD PRIMARY KEY (`msg_id`),
@@ -1017,19 +1049,19 @@ ALTER TABLE `message`
   ADD KEY `ss_id` (`ss_id`);
 
 --
--- Indexes for table `migi`
+-- Indeks untuk tabel `migi`
 --
 ALTER TABLE `migi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `penyintas`
+-- Indeks untuk tabel `penyintas`
 --
 ALTER TABLE `penyintas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `permohonan_bantuan`
+-- Indeks untuk tabel `permohonan_bantuan`
 --
 ALTER TABLE `permohonan_bantuan`
   ADD PRIMARY KEY (`pb_id`),
@@ -1037,19 +1069,19 @@ ALTER TABLE `permohonan_bantuan`
   ADD KEY `ss_id` (`ss_id`);
 
 --
--- Indexes for table `relawan`
+-- Indeks untuk tabel `relawan`
 --
 ALTER TABLE `relawan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ss`
+-- Indeks untuk tabel `ss`
 --
 ALTER TABLE `ss`
   ADD PRIMARY KEY (`ss_id`);
 
 --
--- Indexes for table `task`
+-- Indeks untuk tabel `task`
 --
 ALTER TABLE `task`
   ADD PRIMARY KEY (`task_id`),
@@ -1059,99 +1091,99 @@ ALTER TABLE `task`
   ADD KEY `pb_id` (`pb_id`);
 
 --
--- Indexes for table `token`
+-- Indeks untuk tabel `token`
 --
 ALTER TABLE `token`
   ADD PRIMARY KEY (`tkn_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `bantuan`
+-- AUTO_INCREMENT untuk tabel `bantuan`
 --
 ALTER TABLE `bantuan`
-  MODIFY `bantuan_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bantuan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `bantuan_barang`
+-- AUTO_INCREMENT untuk tabel `bantuan_barang`
 --
 ALTER TABLE `bantuan_barang`
-  MODIFY `bb_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bb_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `bantuan_uang`
+-- AUTO_INCREMENT untuk tabel `bantuan_uang`
 --
 ALTER TABLE `bantuan_uang`
   MODIFY `bu_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `donatur`
+-- AUTO_INCREMENT untuk tabel `donatur`
 --
 ALTER TABLE `donatur`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `identity`
+-- AUTO_INCREMENT untuk tabel `identity`
 --
 ALTER TABLE `identity`
   MODIFY `identity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `message`
+-- AUTO_INCREMENT untuk tabel `message`
 --
 ALTER TABLE `message`
-  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=816;
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=825;
 
 --
--- AUTO_INCREMENT for table `migi`
+-- AUTO_INCREMENT untuk tabel `migi`
 --
 ALTER TABLE `migi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `penyintas`
+-- AUTO_INCREMENT untuk tabel `penyintas`
 --
 ALTER TABLE `penyintas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `permohonan_bantuan`
+-- AUTO_INCREMENT untuk tabel `permohonan_bantuan`
 --
 ALTER TABLE `permohonan_bantuan`
-  MODIFY `pb_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `pb_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `relawan`
+-- AUTO_INCREMENT untuk tabel `relawan`
 --
 ALTER TABLE `relawan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `ss`
+-- AUTO_INCREMENT untuk tabel `ss`
 --
 ALTER TABLE `ss`
   MODIFY `ss_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `task`
+-- AUTO_INCREMENT untuk tabel `task`
 --
 ALTER TABLE `task`
   MODIFY `task_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `token`
+-- AUTO_INCREMENT untuk tabel `token`
 --
 ALTER TABLE `token`
   MODIFY `tkn_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `bantuan`
+-- Ketidakleluasaan untuk tabel `bantuan`
 --
 ALTER TABLE `bantuan`
   ADD CONSTRAINT `bantuan_ibfk_1` FOREIGN KEY (`donatur_id`) REFERENCES `donatur` (`id`),
@@ -1160,7 +1192,7 @@ ALTER TABLE `bantuan`
   ADD CONSTRAINT `bantuan_ibfk_4` FOREIGN KEY (`bu_id`) REFERENCES `bantuan_uang` (`bu_id`);
 
 --
--- Constraints for table `identity`
+-- Ketidakleluasaan untuk tabel `identity`
 --
 ALTER TABLE `identity`
   ADD CONSTRAINT `identity_ibfk_1` FOREIGN KEY (`relawan_id`) REFERENCES `relawan` (`id`),
@@ -1168,7 +1200,7 @@ ALTER TABLE `identity`
   ADD CONSTRAINT `identity_ibfk_3` FOREIGN KEY (`penyintas_id`) REFERENCES `penyintas` (`id`);
 
 --
--- Constraints for table `message`
+-- Ketidakleluasaan untuk tabel `message`
 --
 ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`relawan_id`) REFERENCES `relawan` (`id`),
@@ -1177,14 +1209,14 @@ ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_4` FOREIGN KEY (`ss_id`) REFERENCES `ss` (`ss_id`);
 
 --
--- Constraints for table `permohonan_bantuan`
+-- Ketidakleluasaan untuk tabel `permohonan_bantuan`
 --
 ALTER TABLE `permohonan_bantuan`
   ADD CONSTRAINT `permohonan_bantuan_ibfk_1` FOREIGN KEY (`penyintas_id`) REFERENCES `penyintas` (`id`),
   ADD CONSTRAINT `permohonan_bantuan_ibfk_2` FOREIGN KEY (`ss_id`) REFERENCES `ss` (`ss_id`);
 
 --
--- Constraints for table `task`
+-- Ketidakleluasaan untuk tabel `task`
 --
 ALTER TABLE `task`
   ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`relawan_id`) REFERENCES `relawan` (`id`),
