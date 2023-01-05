@@ -101,4 +101,10 @@ $route['admin_chat_text_send'] = 'Admin/admin_chat_text_send';
 $route['admin_chat_img_send/(:any)/(:any)'] = 'Admin/admin_chat_img_send/$1/$2';
 
 
+//Admin-penyintas menu
+$route['admin_list_pengajuan_bantuan'] = 'Admin/admin_list_pengajuan_bantuan';
+$route['admin_get_all_pengajuan_bantuan'] = 'Admin/admin_get_all_pengajuan_bantuan';
+$route['admin_penyintas_detail_pengajuan/(:any)'] = 'Admin/admin_penyintas_detail_pengajuan/$1';
+
+
 // $route['method/(:any)/(:any)'] = 'controller/method/$1/$2';

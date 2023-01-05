@@ -81,7 +81,6 @@ class User extends CI_Controller
     public function user_chat_text_send()
     {
 
-
         $user = $this->_getUserData();
         $role_arr = array('donatur', 'relawan', 'penyintas');
         $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
@@ -176,7 +175,7 @@ class User extends CI_Controller
 
 
 
-
+    //Get User Chat
     public function user_get_chat()
     {
 
@@ -193,7 +192,6 @@ class User extends CI_Controller
             if (sizeof($chats) <= 0) {
                 echo ' ';
             } else {
-
                 foreach ($chats as $chat) :
 
                     $img_attachement = base_url("upload/chat_img/") . $chat["msg_attachement"];
@@ -227,8 +225,6 @@ class User extends CI_Controller
                         echo  '<div class="direct-chat-text float-left" style="height: 215px; width: 220px;">';
                         echo '<img src="' . $img_attachement . '" alt="" width="200px" height="200px"</div></div>';
                     }
-
-
                 endforeach;
             }
         } else {

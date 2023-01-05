@@ -117,7 +117,6 @@ class AuthModel extends CI_Model
             <p>And you registered as a' . ' ' . '<strong>' . $role . '</strong></p>
             <p>Click this link to activate your account : <a href="' . base_url() . 'user_verify?email=' . $email . '&token=' . urlencode($token) . '">Activation</a></p>'
 
-
         ]);
 
         try {
@@ -165,7 +164,7 @@ class AuthModel extends CI_Model
     {
 
         $this->db->select('id')->from($role);
-        $this->db->order_by('id', 'ASC');
+        $this->db->order_by('id', 'DESC');
         $result = $this->db->get()->row();
         return $result;
     }

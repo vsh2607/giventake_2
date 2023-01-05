@@ -176,7 +176,7 @@ class UserModel extends CI_Model
     //Getting number of relawan in database
     public function getTotalRelawan()
     {
-        $this->db->where('identity_role', 2);
+        $this->db->where('identity_role', 2)->where('identity_is_active', 1);
         $total = $this->db->count_all_results('identity');
         return $total;
     }
@@ -184,7 +184,7 @@ class UserModel extends CI_Model
     //Getting number of donatur in database
     public function getTotalDonatur()
     {
-        $this->db->where('identity_role', 1);
+        $this->db->where('identity_role', 1)->where('identity_is_active',1);
         $total = $this->db->count_all_results('identity');
         return $total;
     }
@@ -192,7 +192,7 @@ class UserModel extends CI_Model
     //Getting number of penyintas in database
     public function getTotalPenyintas()
     {
-        $this->db->where('identity_role', 3);
+        $this->db->where('identity_role', 3)->where('identity_is_active', 1);
         $total = $this->db->count_all_results('identity');
         return $total;
     }

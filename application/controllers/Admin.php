@@ -5,10 +5,8 @@ class Admin extends CI_Controller
 
 
 
-
     public function __construct()
     {
-
         parent::__construct();
         $this->load->model('AdminModel');
         $this->load->model('UserModel');
@@ -43,6 +41,7 @@ class Admin extends CI_Controller
     }
 
 
+
     //showing donatur contacts from admin
     public function admin_contacts_donatur()
     {
@@ -72,6 +71,7 @@ class Admin extends CI_Controller
             redirect('admin_login');
         }
     }
+
 
     //showing donatur contacts from admin
     public function admin_contacts_relawan()
@@ -160,8 +160,6 @@ class Admin extends CI_Controller
             redirect('admin_login');
         }
     }
-
-
 
 
 
@@ -314,4 +312,61 @@ class Admin extends CI_Controller
             redirect('admin_login');
         }
     }
+
+
+
+    public function admin_list_pengajuan_bantuan()
+    {
+
+
+        $admin = $this->_getAdminData();
+
+        $data['admin_name'] = $admin['ss_name'];
+        $data['page_position'] = 'List Pengajuan Bantuan';
+        $data['total_donatur'] = $this->UserModel->getTotalDonatur();
+        $data['total_relawan'] = $this->UserModel->getTotalDonatur();
+        $data['total_penyintas'] = $this->UserModel->getTotalPenyintas();
+        $data['list_pengajuan_bantuan_penyintas'] = $this->AdminModel->show_list_pengajuan_penyintas();
+
+
+
+        if ($admin !== null) {
+            $this->load->view('admin/templates/header', $data);
+            $this->load->view('admin/penyintas_list_pengajuan_bantuan', $data);
+            $this->load->view('admin/templates/footer');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+              <small>Plese login first</small>
+              </div>');
+            redirect('admin_login');
+        }
+    }
+
+
+    public function admin_penyintas_detail_pengajuan($noIdPengajuan){
+        
+        $admin = $this->_getAdminData();
+
+
+        $data['admin_name'] = $admin['ss_name'];
+        $data['page_position'] = 'Detail Permohonan';
+        $data['total_donatur'] = $this->UserModel->getTotalDonatur();
+        $data['total_relawan'] = $this->UserModel->getTotalDonatur();
+        $data['total_penyintas'] = $this->UserModel->getTotalPenyintas();
+        $data['list_pengajuan_bantuan_penyintas'] = $this->AdminModel->admin_get_detail_pengajuan($noIdPengajuan);
+
+
+
+        if ($admin !== null) {
+            $this->load->view('admin/templates/header', $data);
+            $this->load->view('admin/penyintas_detail_pengajuan_bantuan', $data);
+            $this->load->view('admin/templates/footer');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+              <small>Plese login first</small>
+              </div>');
+            redirect('admin_login');
+        }
+    }
+
 }

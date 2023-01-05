@@ -5,8 +5,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title float-left"><a href="<?= base_url('penyintas_minta_bantuan') ?>" class="btn btn-success btn-sm">Buat Bantuan</a></h3>
-
+                        <h3 class="card-title float-left"><a href="<?= base_url('penyintas_minta_bantuan') ?>" class="btn btn-success btn-sm">Buat Pengajuan</a></h3>
                         <!-- <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -48,6 +47,10 @@
                                             <td><span class="badge bg-warning">Pending</span></td>
                                         <?php } else if ($lpb['pb_status'] == 'Accepted') { ?>
                                             <td><span class="badge bg-success">Accepted</span></td>
+                                        <?php } else if ($lpb['pb_status'] == 'Sedang Diantar') { ?>
+                                            <td><span class="badge bg-success">Sedang Diantar</span></td>
+                                        <?php } else if ($lpb['pb_status'] == 'Telah Tiba') { ?>
+                                            <td><span class="badge bg-success">Telah Tiba</span></td>
                                         <?php } else if ($lpb['pb_status'] == 'Denied') { ?>
                                             <td><span class="badge bg-danger">Denied</span></td>
                                         <?php

@@ -211,4 +211,5 @@ class Auth extends CI_Controller
         </div>');
         redirect('admin_login');
     }
+    
 }
