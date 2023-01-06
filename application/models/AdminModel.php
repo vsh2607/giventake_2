@@ -168,23 +168,24 @@ class AdminModel extends CI_Model
     public function cek_bantuan()
     {
         $bantuan =  $this->input->post('barang');
-        
+
         $this->db->like('bb_nama', $bantuan);
         $total = $this->db->count_all_results('bantuan_barang');
-        
+
 
         // $this->db->select('*')->from('bantuan_barang');
         // $this->db->join('bantuan','bantuan.bb_id = bantuan_barang.bb_id');
         // $this->db->like('bb_nama', $bantuan);
         // $hasil = $this->db->get('bantuan_barang')->result_array();
-        
 
-        
-        return $total ;
+
+
+        return $total;
     }
 
 
-    public function get_list_bantuan_donatur(){
+    public function get_list_bantuan_donatur()
+    {
         $this->db->select('*')->from('bantuan_barang');
         $this->db->join('bantuan', 'bantuan.bb_id = bantuan_barang.bb_id');
         $this->db->join('identity', 'identity.donatur_id = bantuan.donatur_id');
@@ -195,7 +196,8 @@ class AdminModel extends CI_Model
 
 
 
-    public function admin_reject_permohonan(){
+    public function admin_reject_permohonan()
+    {
         $admin_respon = $this->input->post('admin_respon');
         $permohonan_id = $this->input->post('permohonan_id');
 
@@ -203,19 +205,19 @@ class AdminModel extends CI_Model
             'pb_jawaban' => $admin_respon,
             'pb_status' => 'Denied'
         ];
-       $this->db->where('pb_id', $permohonan_id);
-       $this->db->update('permohonan_bantuan', $data);
-
+        $this->db->where('pb_id', $permohonan_id);
+        $this->db->update('permohonan_bantuan', $data);
     }
 
 
 
-    public function admin_get_list_bantuan_penyintas(){
-        
+    public function admin_get_list_bantuan_penyintas()
+    {
+
         $bantuan =  $this->input->post('barang');
-        
+
         $this->db->select('*')->from('bantuan_barang');
-        $this->db->join('bantuan','bantuan.bb_id = bantuan_barang.bb_id');
+        $this->db->join('bantuan', 'bantuan.bb_id = bantuan_barang.bb_id');
         $this->db->like('bb_nama', $bantuan);
         $hasil = $this->db->get()->result_array();
 
@@ -223,7 +225,8 @@ class AdminModel extends CI_Model
     }
 
 
-    public function admin_get_donatur_bantuan_bb(){
+    public function admin_get_donatur_bantuan_bb()
+    {
         $id_bantuan = $this->input->post('id_bantuan');
         $this->db->select('*')->from('bantuan');
         $this->db->join('bantuan_barang', 'bantuan_barang.bb_id = bantuan.bb_id');
@@ -235,7 +238,8 @@ class AdminModel extends CI_Model
         return $result;
     }
 
-    public function get_active_relawan(){
+    public function get_active_relawan()
+    {
         $this->db->select('*')->from('relawan');
         $this->db->join('identity', 'identity.relawan_id = relawan.id');
         $this->db->where('relawan.status', 'on');
@@ -246,7 +250,8 @@ class AdminModel extends CI_Model
     }
 
 
-    public function admin_create_task(){
+    public function admin_create_task()
+    {
         $nama_pemohon = $this->input->post('identity_name');
         $permohonan_drop_loc = $this->input->post('pb_drop_loc');
         $permohonan_bantuan_id = $this->input->post('pb_id');
@@ -255,7 +260,7 @@ class AdminModel extends CI_Model
         $lokasi_pickup_donatur = $this->input->post('donatur_pickup_loc');
         $relawan_id = $this->input->post('relawan_id');
 
-     
+
         $this->db->select("*")->from('bantuan');
         $this->db->join('bantuan_barang', 'bantuan_barang.bb_id = bantuan.bb_id');
         $this->db->where('bantuan.bantuan_id', $bantuan_donatur_id);
@@ -269,40 +274,39 @@ class AdminModel extends CI_Model
             'pb_id' => $permohonan_bantuan_id,
             'task_pickup_loc' => $lokasi_pickup_donatur,
             'task_drop_loc' => $permohonan_drop_loc,
-            'task_description' => 'Mengantar '. $data_bantuan->bb_jumlah . ' '.  $data_bantuan->bb_satuan . ' '. $data_bantuan->bb_nama
+            'task_description' => 'Mengantar ' . $data_bantuan->bb_jumlah . ' ' .  $data_bantuan->bb_satuan . ' ' . $data_bantuan->bb_nama
         ];
 
-        
-
-      $data_bantuan_donatur  = [
-        'bantuan_status' => 'Mendapatkan Relawan'
-      ];
-
-      $this->db->where('bantuan_id', $bantuan_donatur_id);
-      $this->db->update('bantuan', $data_bantuan_donatur);
 
 
-      $data_permohonan_bantuan = [
-        'pb_status' => 'Accepted'
-      ];
+        $data_bantuan_donatur  = [
+            'bantuan_status' => 'Mendapatkan Relawan'
+        ];
 
-      $this->db->where('pb_id', $permohonan_bantuan_id);
-      $this->db->update('permohonan_bantuan', $data_permohonan_bantuan);
-
-      $data_relawan = [
-        'status' => 'off'
-      ];
-
-      $this->db->where('id', $relawan_id);
-      $this->db->update('relawan', $data_relawan);
-
-      $this->db->insert('task', $data);
+        $this->db->where('bantuan_id', $bantuan_donatur_id);
+        $this->db->update('bantuan', $data_bantuan_donatur);
 
 
+        $data_permohonan_bantuan = [
+            'pb_status' => 'Accepted'
+        ];
+
+        $this->db->where('pb_id', $permohonan_bantuan_id);
+        $this->db->update('permohonan_bantuan', $data_permohonan_bantuan);
+
+        $data_relawan = [
+            'status' => 'off'
+        ];
+
+        $this->db->where('id', $relawan_id);
+        $this->db->update('relawan', $data_relawan);
+
+        $this->db->insert('task', $data);
     }
 
 
-    public function admin_set_all_status_telahambil($task_id){
+    public function admin_set_all_status_telahambil($task_id)
+    {
         //status bantuan
         //status permohonan
 
@@ -324,8 +328,48 @@ class AdminModel extends CI_Model
 
         $this->db->where('pb_id', $task_data->pb_id);
         $this->db->update('permohonan_bantuan', $data_status_permohonan);
-
     }
 
+    public function admin_set_all_status_telahtiba($task_id)
+    {
+        //status bantuan
+        //status permohonan
 
+        $this->db->where('task_id', $task_id);
+        $task_data = $this->db->get('task')->row();
+
+
+        $data_status_bantuan = [
+            'bantuan_status' => 'Telah Tiba'
+        ];
+
+        $this->db->where('bantuan_id', $task_data->bantuan_id);
+        $this->db->update('bantuan', $data_status_bantuan);
+
+        $data_status_permohonan = [
+            'pb_status' => 'Telah Tiba'
+        ];
+
+
+        $this->db->where('pb_id', $task_data->pb_id);
+        $this->db->update('permohonan_bantuan', $data_status_permohonan);
+
+        $data_relawan = [
+            'status' => 'on'
+        ];
+
+
+        
+        $this->db->where('id', $task_data->relawan_id);
+        $this->db->update('relawan', $data_relawan);
+
+
+        $data_task = [
+            'task_status' => 'Task Sudah Selesai'
+        ];
+
+        $this->db->where('task_id', $task_data->task_id);
+        $this->db->update('task', $data_task);
+
+    }
 }

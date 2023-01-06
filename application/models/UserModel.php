@@ -260,6 +260,12 @@ class UserModel extends CI_Model
         return $result;
     }
 
+    public function get_list_relawan_task_selesai($user_id){
+        $this->db->where('relawan_id', $user_id)->where('task_status', 'Task Sudah Selesai');
+        $result = $this->db->get('task')->result_array();
+        return $result; 
+    }
+
 
     public function user_set_bantuan_taken_relawan($task_id){
         $data = [

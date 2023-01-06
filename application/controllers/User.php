@@ -407,6 +407,7 @@ class User extends CI_Controller
             $user_id = $this->_getUserId($user_role, $user);
             $data['list_task_relawan_ditugaskan'] = $this->UserModel->get_list_relawan_task_ditugaskan($user_id);
             $data['list_task_relawan_sedangproses'] = $this->UserModel->get_list_relawan_task_proses($user_id);
+            $data['list_task_relawan_sudahselesai'] = $this->UserModel->get_list_relawan_task_selesai($user_id);
 
 
             $role = $role_arr[$user['identity_role'] - 1];

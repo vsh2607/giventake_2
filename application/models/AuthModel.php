@@ -104,12 +104,12 @@ class AuthModel extends CI_Model
     private function _sendEmail($name, $email, $username, $token, $role)
     {
 
-        $credentials = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', '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');
+        $credentials = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', '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');
         $apiInstance = new SendinBlue\Client\Api\TransactionalEmailsApi(new GuzzleHttp\Client(), $credentials);
 
         $sendSmtpEmail = new \SendinBlue\Client\Model\SendSmtpEmail([
             'subject' => 'Account Verification',
-            'sender' => ['name' => 'Support System', 'email' => 'susystem7@gmail.com'],
+            'sender' => ['name' => 'Support System', 'email' => 'susystem8@gmail.com'],
             // 'replyTo' => ['name' => 'Sendinblue', 'email' => 'susystem7@gmail.com'],
             'to' => [['name' => $name, 'email' => $email]],
             'htmlContent' => '<p>Hello ' . ' ' . '<strong>' . $name . '</strong>,</p>

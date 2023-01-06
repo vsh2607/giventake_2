@@ -526,4 +526,20 @@ class Admin extends CI_Controller
             redirect('admin_login');
         }
     }
+
+
+    public function admin_set_all_status_telahtiba($task_id){
+        $admin = $this->_getAdminData();
+
+
+        if ($admin !== null) {
+            $this->AdminModel->admin_set_all_status_telahtiba($task_id);
+            redirect('user_relawan_task_list');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            <small>Plese login first</small>
+            </div>');
+            redirect('admin_login');
+        }
+    }
 }
