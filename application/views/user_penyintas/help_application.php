@@ -44,6 +44,7 @@
                                     <option value="Botol">Botol</option>
                                     <option value="Karung">Karung</option>
                                     <option value="Kardus">Kardus</option>
+                                    <option value="Helai">Helai</option>
                                 </select>
                             </div>
 

@@ -36,6 +36,8 @@
                                                 <span class="badge bg-success">Sedang Diantar</span>
                                             <?php } else if ($lbd['bantuan_status'] == 'Telah Tiba') { ?>
                                                 <span class="badge bg-success">Telah Tiba</span>
+                                            <?php } else if ($lbd['bantuan_status'] == 'Mendapatkan Relawan') { ?>
+                                                <span class="badge bg-success">Relawan Menuju Donatur</span>
                                             <?php } ?>
                                         </td>
                                         <td><a href="<?= base_url('admin_penyintas_detail_pengajuan') ?>/<?= $lbd['bantuan_id'] ?>" class="btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">

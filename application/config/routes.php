@@ -90,6 +90,10 @@ $route['penyintas_minta_bantuan'] = 'User/penyintas_minta_bantuan';
 $route['donatur_beri_bantuan_list'] = 'User/donatur_beri_bantuan_list';
 $route['donatur_beri_bantuan'] = 'User/donatur_beri_bantuan';
 
+//User menus for relawan
+$route['user_relawan_task_list'] = 'User/user_relawan_task_list';
+$route['user_set_bantuan_taken_relawan/(:any)'] = 'User/user_set_bantuan_taken_relawan/$1';
+
 
 
 
@@ -110,6 +114,11 @@ $route['admin_chat_text_send'] = 'Admin/admin_chat_text_send';
 $route['admin_chat_img_send/(:any)/(:any)'] = 'Admin/admin_chat_img_send/$1/$2';
 
 
+
+$route['admin_set_all_status_telahambil/(:any)'] = 'Admin/admin_set_all_status_telahambil/$1';
+$route['admin_set_all_status_telahtiba/(:any)'] = 'Admin/admin_set_all_status_telahtiba/$1';
+
+
 //Admin-penyintas menu
 $route['admin_list_pengajuan_bantuan'] = 'Admin/admin_list_pengajuan_bantuan';
 $route['admin_get_all_pengajuan_bantuan'] = 'Admin/admin_get_all_pengajuan_bantuan';
@@ -122,6 +131,11 @@ $route['admin_get_list_bantuan_penyintas'] = 'Admin/admin_get_list_bantuan_penyi
 
 //Admin-donatur menu
 $route['admin_list_bantuan_donatur']  = 'Admin/admin_list_bantuan_donatur';
+$route['admin_get_donatur_bantuan_bb'] = 'Admin/admin_get_donatur_bantuan_bb';
+
+
+//Admin relawan menu
+$route['admin_create_task'] = 'Admin/admin_create_task';
 
 
 

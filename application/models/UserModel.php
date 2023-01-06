@@ -246,4 +246,29 @@ class UserModel extends CI_Model
 
         return $result;
     }
+
+
+    public function get_list_relawan_task_ditugaskan($user_id){
+        $this->db->where('relawan_id', $user_id)->where('task_status', 'Ditugaskan');
+        $result = $this->db->get('task')->result_array();
+        return $result;
+    }
+
+    public function get_list_relawan_task_proses($user_id){
+        $this->db->where('relawan_id', $user_id)->where('task_status', 'Sedang Dalam Proses');
+        $result = $this->db->get('task')->result_array();
+        return $result;
+    }
+
+
+    public function user_set_bantuan_taken_relawan($task_id){
+        $data = [
+            'task_status' => 'Sedang Dalam Proses'
+        ];
+
+
+        $this->db->where('task_id', $task_id);
+        $this->db->update('task', $data);
+
+    }
 }

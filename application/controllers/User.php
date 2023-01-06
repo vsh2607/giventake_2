@@ -310,17 +310,19 @@ class User extends CI_Controller
     public function donatur_beri_bantuan_list()
     {
         $user = $this->_getUserData();
-        $role_arr = array('donatur', 'relawan', 'penyintas');
 
-        $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
-        $user_role = $user['identity_role'];
-        $user_id = $this->_getUserId($user_role, $user);
-
-        $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
-        $data['user_name'] = $user['identity_name'];
-        $data['page_position'] = 'List Bantuan Donatur';
 
         if ($user !== null) {
+
+            $role_arr = array('donatur', 'relawan', 'penyintas');
+
+            $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
+            $user_role = $user['identity_role'];
+            $user_id = $this->_getUserId($user_role, $user);
+
+            $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
+            $data['user_name'] = $user['identity_name'];
+            $data['page_position'] = 'List Bantuan Donatur';
 
             $user_role = $user['identity_role'];
             $user_id = $this->_getUserId($user_role, $user);
@@ -344,19 +346,20 @@ class User extends CI_Controller
     public function donatur_beri_bantuan()
     {
         $user = $this->_getUserData();
-        $role_arr = array('donatur', 'relawan', 'penyintas');
 
-        $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
-        $user_role = $user['identity_role'];
-        $user_id = $this->_getUserId($user_role, $user);
-
-        $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
-        $data['user_name'] = $user['identity_name'];
-        $data['page_position'] = 'Form Beri Bantuan';
-        $user_role = $user['identity_role'];
-        $user_id = $this->_getUserId($user_role, $user);
 
         if ($user !== null) {
+            $role_arr = array('donatur', 'relawan', 'penyintas');
+
+            $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
+            $user_role = $user['identity_role'];
+            $user_id = $this->_getUserId($user_role, $user);
+
+            $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
+            $data['user_name'] = $user['identity_name'];
+            $data['page_position'] = 'Form Beri Bantuan';
+            $user_role = $user['identity_role'];
+            $user_id = $this->_getUserId($user_role, $user);
 
             $this->form_validation->set_rules('bb_nama', 'Nama Barang', 'required');
             $this->form_validation->set_rules('bb_pickup_loc', 'Alamat Pick Up', 'required');
@@ -371,6 +374,80 @@ class User extends CI_Controller
                 $this->UserModel->donatur_beri_bantuan($user_id);
                 redirect('donatur_beri_bantuan_list');
             }
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            <small>Plese login first</small>
+            </div>');
+            redirect('user_login');
+        }
+    }
+
+
+
+
+
+    public function user_relawan_task_list()
+    {
+        $user = $this->_getUserData();
+
+
+        if ($user !== null) {
+
+            $role_arr = array('donatur', 'relawan', 'penyintas');
+
+            $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
+            $user_role = $user['identity_role'];
+            $user_id = $this->_getUserId($user_role, $user);
+
+            $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
+            $data['user_name'] = $user['identity_name'];
+            $data['page_position'] = 'List Task Relawan';
+
+            $user_role = $user['identity_role'];
+            $user_id = $this->_getUserId($user_role, $user);
+            $data['list_task_relawan_ditugaskan'] = $this->UserModel->get_list_relawan_task_ditugaskan($user_id);
+            $data['list_task_relawan_sedangproses'] = $this->UserModel->get_list_relawan_task_proses($user_id);
+
+
+            $role = $role_arr[$user['identity_role'] - 1];
+            $this->load->view('user_' . $role . '/templates/header', $data);
+            $this->load->view('user_' . $role . '/relawan_task_list', $data);
+            $this->load->view('user_' . $role . '/templates/footer');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            <small>Plese login first</small>
+            </div>');
+            redirect('user_login');
+        }
+    }
+
+
+    public function user_set_bantuan_taken_relawan($task_id)
+    {
+        $user = $this->_getUserData();
+
+       
+
+        if ($user !== null) {
+
+            $role_arr = array('donatur', 'relawan', 'penyintas');
+
+            $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
+            $user_role = $user['identity_role'];
+            $user_id = $this->_getUserId($user_role, $user);
+
+            $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
+            $data['user_name'] = $user['identity_name'];
+            $data['page_position'] = 'List Task Relawan';
+
+            $user_role = $user['identity_role'];
+            $user_id = $this->_getUserId($user_role, $user);
+            $this->UserModel->user_set_bantuan_taken_relawan($task_id);
+
+            redirect('user_relawan_task_list');
+           
+
+
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
             <small>Plese login first</small>

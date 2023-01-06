@@ -1,5 +1,7 @@
 <?php
 
+use GuzzleHttp\Psr7\Response;
+
 class Admin extends CI_Controller
 {
 
@@ -355,6 +357,7 @@ class Admin extends CI_Controller
         $data['total_relawan'] = $this->UserModel->getTotalDonatur();
         $data['total_penyintas'] = $this->UserModel->getTotalPenyintas();
         $data['list_pengajuan_bantuan_penyintas'] = $this->AdminModel->admin_get_detail_pengajuan($noIdPengajuan);
+        $data['active_relawan'] = $this->AdminModel->get_active_relawan();
 
 
 
@@ -452,16 +455,74 @@ class Admin extends CI_Controller
 
             $lists = $this->AdminModel->admin_get_list_bantuan_penyintas();
 
-            echo '<select name="bantuan_id" id="bantuan_id" class="form-control">';
+            echo '<select name="bantuan_id" id="bantuan_id" onchange="getSelected()" class="form-control">';
             echo '<option selected disabled>Pilih Bantuan...</option>';
             foreach ($lists as $list) :
-                echo '<option value="'.$list['bantuan_id'].'">'.$list['bb_nama'].' - '.$list['bb_jumlah'].' '.$list['bb_satuan'].'</option>';
+                echo '<option value="' . $list['bantuan_id'] . '">' . $list['bb_nama'] . ' - ' . $list['bb_jumlah'] . ' ' . $list['bb_satuan'] . '</option>';
             endforeach;
             echo '</select>';
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
               <small>Plese login first</small>
               </div>');
+            redirect('admin_login');
+        }
+    }
+
+
+
+    public function admin_get_donatur_bantuan_bb()
+    {
+        $admin = $this->_getAdminData();
+
+
+        if ($admin !== null) {
+
+            $data = $this->AdminModel->admin_get_donatur_bantuan_bb();
+            $data_json = array('data' => $data);
+
+            header('Content-Type: application/json');
+            echo json_encode($data_json);
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            <small>Plese login first</small>
+            </div>');
+            redirect('admin_login');
+        }
+    }
+
+
+
+    public function admin_create_task()
+    {
+        $admin = $this->_getAdminData();
+
+
+        if ($admin !== null) {
+            $this->AdminModel->admin_create_task();
+            redirect('admin_list_pengajuan_bantuan');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            <small>Plese login first</small>
+            </div>');
+            redirect('admin_login');
+        }
+    }
+
+
+
+    public function admin_set_all_status_telahambil($task_id)
+    {
+        $admin = $this->_getAdminData();
+
+
+        if ($admin !== null) {
+            $this->AdminModel->admin_set_all_status_telahambil($task_id);
+            redirect('user_relawan_task_list');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            <small>Plese login first</small>
+            </div>');
             redirect('admin_login');
         }
     }

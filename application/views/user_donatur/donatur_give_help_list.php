@@ -44,6 +44,8 @@
                                                 <span class="badge bg-success">Sedang Diantar</span>
                                             <?php } else if ($lbd['bantuan_status'] == 'Telah Tiba') { ?>
                                                 <span class="badge bg-success">Telah Tiba</span>
+                                            <?php } else if ($lbd['bantuan_status'] == 'Mendapatkan Relawan') { ?>
+                                                <span class="badge bg-success">Relawan Akan Datang Mengambil Barang</span>
                                             <?php } ?>
                                         </td>
                                         </td>

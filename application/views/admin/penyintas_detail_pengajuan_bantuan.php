@@ -148,29 +148,55 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">List Bantuan</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <button class="close" type="button" data-dismiss="modal" id="dismiss_button" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
 
             <div class="modal-body" id="list_bantuan">
-                <form action="" method="post">
+                <form action="<?=base_url('admin_create_task')?>" method="post">
                     <div class="form-group">
                         <label for="identity_name">Nama Pemohon</label>
                         <input type="text" class="form-control" id="identity_name" name="identity_name" value="<?= $list_pengajuan_bantuan_penyintas->identity_name ?>" readonly>
                     </div>
 
+                    <div class="form-group">
+                        <label for="pb_drop_loc">Lokasi Drop Bantuan</label>
+                        <input type="text" class="form-control" id="pb_drop_loc" name="pb_drop_loc" value="<?= $list_pengajuan_bantuan_penyintas->pb_drop_loc ?>" readonly>
+                    </div>
 
 
+                    <input type="hidden" id="pb_id" name="pb_id" value="<?= $list_pengajuan_bantuan_penyintas->pb_id ?>">
+                    
                     <div class="form-group">
                         <label for="bantuan_id">List Bantuan</label>
                         <div id="list_bantuan_tersedia">
 
                         </div>
-                        
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="donatur">Nama Donatur</label>
+                        <input type="text" id="donatur_name"  name="donatur_name" value="" class="form-control" readonly>
                     </div>
 
 
+                    <div class="form-group">
+                        <label for="donatur">Lokasi Pick Up Bantuan</label>
+                        <input type="text" id="donatur_pickup_loc" name="donatur_pickup_loc"value="" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="relawan_id">Relawan</label>
+                        <select class="form-control" name="relawan_id" id="relawan_id">
+                            <option disabled selected>Pilih Relawan...</option>
+                            <?php foreach ($active_relawan as $ar) : ?>
+                                <option value="<?= $ar['relawan_id'] ?>"><?= $ar['identity_name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                    </div>
 
 
 
@@ -178,8 +204,8 @@
 
             <div class="modal-footer">
 
-                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
-                <button class="btn btn-success btn-sm" id="create_task_btn" type="button">Create Task</button>
+                <button class="btn btn-secondary btn-sm" type="button" id="dismiss_button2" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success btn-sm" id="create_task_btn" type="submit">Create Task</button>
             </div>
             </form>
 
@@ -202,7 +228,7 @@
                     barang: barang
                 },
                 function(data, status) {
-
+                    alert(data);
                 });
         });
 
@@ -216,8 +242,39 @@
                     $("#list_bantuan_tersedia").html(data);
                 });
         });
+
+
+        $("#dismiss_button").on('click', function(){
+            document.getElementById('donatur_name').value = '';
+            document.getElementById('donatur_pickup_loc').value = '';
+        });
+        $("#dismiss_button2").on('click', function(){
+            document.getElementById('donatur_name').value = '';
+            document.getElementById('donatur_pickup_loc').value = '';
+        });
+
+
+
     });
 </script>
+
+
+<script>
+    function getSelected() {
+        var select = document.getElementById('bantuan_id');
+        var value = select.options[select.selectedIndex].value;
+
+
+        $.post('<?= base_url('admin_get_donatur_bantuan_bb') ?>', {
+            id_bantuan: value
+        }, function(data, status) {
+            document.getElementById('donatur_name').value = data['data'].identity_name;
+            document.getElementById('donatur_pickup_loc').value = data['data'].bb_pickup_loc;
+        });
+    }
+</script>
+
+
 
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
