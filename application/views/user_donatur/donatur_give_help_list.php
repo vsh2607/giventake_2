@@ -27,7 +27,7 @@
                                     <th>Barang Bantuan</th>
                                     <th>Jumlah Bantuan</th>
                                     <th>Status</th>
-                                    <th>Detail</th>
+                                    <!-- <th>Detail</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,7 +49,7 @@
                                             <?php } ?>
                                         </td>
                                         </td>
-                                        <td><a href="<?= base_url('penyintas_minta_bantuan_detail') ?>/<?= $lbd['bantuan_id'] ?>" class="btn btn-primary btn-sm">Detail</a></td>
+                                        <!-- <td><a href="<?= base_url('penyintas_minta_bantuan_detail') ?>/<?= $lbd['bantuan_id'] ?>" class="btn btn-primary btn-sm">Detail</a></td> -->
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

@@ -104,7 +104,7 @@ class AuthModel extends CI_Model
     private function _sendEmail($name, $email, $username, $token, $role)
     {
 
-        $credentials = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', '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');
+        $credentials = SendinBlue\Client\Configuration::getDefaultConfiguration()->setApiKey('api-key', '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');
         $apiInstance = new SendinBlue\Client\Api\TransactionalEmailsApi(new GuzzleHttp\Client(), $credentials);
 
         $sendSmtpEmail = new \SendinBlue\Client\Model\SendSmtpEmail([
