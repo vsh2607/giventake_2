@@ -4,7 +4,7 @@
         <div class="card card-success card-outline direct-chat direct-chat-success">
             <div class="card-header">
                 <h3 class="card-title"><b><?= $user_name ?></b></h3>
-                <h2 id="test_text"></h2>
+                <h1 id="test_text"></h1>
 
                 <div class="card-tools">
                     <a class="btn btn-tool btn-sm" href="#">
@@ -72,7 +72,7 @@
                 <form action="<?= base_url("Admin/admin_chat_img_send" . '/' . $user_data['identity_role'] . '/' . $user_data[$user_role . '_id'] . '/' . $user_data['identity_name']) ?>" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="msg_attachement">Image Upload</label>
-                        <input type="file" class="form-control" style="width: 100%;" id="msg_attachement" name="msg_attachement" required>
+                        <input type="file" class="form-control" style="width: 100%;" id="msg_attachement"  required>
                     </div>
             </div>
 
@@ -153,7 +153,10 @@
             identity_name: identity_name,
             identity_id: identity_id,
             message: msg
+
         }, function(data, status) {
+
+
 
             $("#message_card").load("<?= base_url("admin_get_chat") ?>", {
                 identity_id: identity_id,

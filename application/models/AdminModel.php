@@ -16,7 +16,7 @@ class AdminModel extends CI_Model
     {
 
         $message_body = $this->input->post('message');
-        $user_role = $this->input->post('user_role');
+        $user_role = $this->input->post('identity_role');
         $user_id = $this->input->post('identity_id');
 
 
@@ -40,7 +40,7 @@ class AdminModel extends CI_Model
                 'ss_id' => 1,
                 'msg_is_opened' => 0
             ];
-        } else {
+        } else if ($user_role == 3) {
             $data = [
                 'msg_body' => $message_body,
                 'msg_created' => time(),
@@ -371,5 +371,18 @@ class AdminModel extends CI_Model
         $this->db->where('task_id', $task_data->task_id);
         $this->db->update('task', $data_task);
 
+    }
+
+
+    public function get_list_task_relawan(){
+        $this->db->select('*')->from('task');
+        $this->db->join('bantuan', 'bantuan.bantuan_id = task.bantuan_id');
+        $this->db->join('permohonan_bantuan', 'permohonan_bantuan.pb_id = task.pb_id');
+        $this->db->join('identity', 'identity.relawan_id = task.relawan_id');
+        $this->db->order_by('task_id', 'DESC');
+       
+
+        $result = $this->db->get()->result_array();
+        return $result;
     }
 }

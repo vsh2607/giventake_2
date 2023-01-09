@@ -427,7 +427,7 @@ class User extends CI_Controller
     {
         $user = $this->_getUserData();
 
-       
+
 
         if ($user !== null) {
 
@@ -446,9 +446,44 @@ class User extends CI_Controller
             $this->UserModel->user_set_bantuan_taken_relawan($task_id);
 
             redirect('user_relawan_task_list');
-           
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+            <small>Plese login first</small>
+            </div>');
+            redirect('user_login');
+        }
+    }
 
 
+    public function penyintas_minta_bantuan_detail($permohonan_id)
+    {
+
+        $user = $this->_getUserData();
+
+
+        if ($user !== null) {
+
+            $role_arr = array('donatur', 'relawan', 'penyintas');
+
+            $role_arr_b = array('Donatur C-19', 'Relawan C-19', 'Penyintas C-19');
+            $user_role = $user['identity_role'];
+            $user_id = $this->_getUserId($user_role, $user);
+
+            $data['user_role'] = $role_arr_b[$user['identity_role'] - 1];
+            $data['user_name'] = $user['identity_name'];
+            $data['page_position'] = 'Detail Permohonan Penyintas';
+
+            $user_role = $user['identity_role'];
+            $user_id = $this->_getUserId($user_role, $user);
+            $data['detail_permohonan_bantuan'] = $this->UserModel->get_detail_permohonan_penyintas($permohonan_id);
+
+
+
+
+            $role = $role_arr[$user['identity_role'] - 1];
+            $this->load->view('user_' . $role . '/templates/header', $data);
+            $this->load->view('user_' . $role . '/help_application_detail', $data);
+            $this->load->view('user_' . $role . '/templates/footer');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
             <small>Plese login first</small>

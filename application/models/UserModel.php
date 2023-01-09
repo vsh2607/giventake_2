@@ -85,14 +85,16 @@ class UserModel extends CI_Model
         }
     }
 
-    public function penyintas_get_permohonan_bantuan_list($user_id){
+    public function penyintas_get_permohonan_bantuan_list($user_id)
+    {
         $this->db->where('penyintas_id', $user_id);
         $result = $this->db->get('permohonan_bantuan')->result_array();
         return $result;
     }
 
     //Penyintas apply bantuan
-    public function penyintas_minta_bantuan($user_id){
+    public function penyintas_minta_bantuan($user_id)
+    {
 
         $jenis_bantuan = $this->input->post('pb_jenis_bantuan');
         $barang_kebutuhan = $this->input->post('pb_barang_kebutuhan');
@@ -113,7 +115,7 @@ class UserModel extends CI_Model
             'penyintas_id' => $user_id,
             'ss_id' => 1,
             'pb_created' => time()
-            
+
         ];
 
         $this->db->insert('permohonan_bantuan', $data);
@@ -184,7 +186,7 @@ class UserModel extends CI_Model
     //Getting number of donatur in database
     public function getTotalDonatur()
     {
-        $this->db->where('identity_role', 1)->where('identity_is_active',1);
+        $this->db->where('identity_role', 1)->where('identity_is_active', 1);
         $total = $this->db->count_all_results('identity');
         return $total;
     }
@@ -200,7 +202,8 @@ class UserModel extends CI_Model
 
 
 
-    public function donatur_beri_bantuan($donatur_id){
+    public function donatur_beri_bantuan($donatur_id)
+    {
         $tipe_bantuan = $this->input->post('bantuan_type');
         $jenis_bantuan = $this->input->post('bb_jenis');
         $nama_bantuan = $this->input->post('bb_nama');
@@ -233,12 +236,11 @@ class UserModel extends CI_Model
 
 
         $this->db->insert('bantuan', $data_barang);
-
-        
     }
 
 
-    public function get_list_bantuan_donatur($user_id){
+    public function get_list_bantuan_donatur($user_id)
+    {
         $this->db->select('*')->from('bantuan_barang');
         $this->db->join('bantuan', 'bantuan_barang.bb_id = bantuan.bb_id');
         $this->db->where('bantuan.donatur_id', $user_id);
@@ -248,26 +250,30 @@ class UserModel extends CI_Model
     }
 
 
-    public function get_list_relawan_task_ditugaskan($user_id){
+    public function get_list_relawan_task_ditugaskan($user_id)
+    {
         $this->db->where('relawan_id', $user_id)->where('task_status', 'Ditugaskan');
         $result = $this->db->get('task')->result_array();
         return $result;
     }
 
-    public function get_list_relawan_task_proses($user_id){
+    public function get_list_relawan_task_proses($user_id)
+    {
         $this->db->where('relawan_id', $user_id)->where('task_status', 'Sedang Dalam Proses');
         $result = $this->db->get('task')->result_array();
         return $result;
     }
 
-    public function get_list_relawan_task_selesai($user_id){
+    public function get_list_relawan_task_selesai($user_id)
+    {
         $this->db->where('relawan_id', $user_id)->where('task_status', 'Task Sudah Selesai');
         $result = $this->db->get('task')->result_array();
-        return $result; 
+        return $result;
     }
 
 
-    public function user_set_bantuan_taken_relawan($task_id){
+    public function user_set_bantuan_taken_relawan($task_id)
+    {
         $data = [
             'task_status' => 'Sedang Dalam Proses'
         ];
@@ -275,6 +281,12 @@ class UserModel extends CI_Model
 
         $this->db->where('task_id', $task_id);
         $this->db->update('task', $data);
+    }
 
+    public function get_detail_permohonan_penyintas($permohonan_id)
+    {
+        $this->db->where("pb_id", $permohonan_id);
+        $result =  $this->db->get('permohonan_bantuan')->row();
+        return $result;
     }
 }

@@ -83,6 +83,7 @@ $route['user_get_chat'] = 'User/user_get_chat';
 //User menus for penyintas
 $route['penyintas_minta_bantuan_list'] = 'User/penyintas_minta_bantuan_list';
 $route['penyintas_minta_bantuan'] = 'User/penyintas_minta_bantuan';
+$route['penyintas_minta_bantuan_detail/(:any)'] = 'User/penyintas_minta_bantuan_detail/$1';
 
 
 
@@ -136,6 +137,7 @@ $route['admin_get_donatur_bantuan_bb'] = 'Admin/admin_get_donatur_bantuan_bb';
 
 //Admin relawan menu
 $route['admin_create_task'] = 'Admin/admin_create_task';
+$route['admin_show_relawan_task'] = 'Admin/admin_show_relawan_task';
 
 
 

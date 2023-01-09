@@ -173,6 +173,7 @@ class Admin extends CI_Controller
         $admin = $this->_getAdminData();
 
 
+
         if ($admin !== null) {
             $data = $this->AdminModel->admin_chat_text_send();
             echo $data;
@@ -528,7 +529,8 @@ class Admin extends CI_Controller
     }
 
 
-    public function admin_set_all_status_telahtiba($task_id){
+    public function admin_set_all_status_telahtiba($task_id)
+    {
         $admin = $this->_getAdminData();
 
 
@@ -539,6 +541,33 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
             <small>Plese login first</small>
             </div>');
+            redirect('admin_login');
+        }
+    }
+
+
+    public function admin_show_relawan_task()
+    {
+
+        $admin = $this->_getAdminData();
+        $data['admin_name'] = $admin['ss_name'];
+        $data['page_position'] = 'List Task Relawan';
+        $data['total_donatur'] = $this->UserModel->getTotalDonatur();
+        $data['total_relawan'] = $this->UserModel->getTotalDonatur();
+        $data['total_penyintas'] = $this->UserModel->getTotalPenyintas();
+
+        $data['list_task_relawan'] = $this->AdminModel->get_list_task_relawan();
+
+      
+
+        if ($admin !== null) {
+            $this->load->view('admin/templates/header', $data);
+            $this->load->view('admin/relawan_task_list', $data);
+            $this->load->view('admin/templates/footer');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+              <small>Plese login first</small>
+              </div>');
             redirect('admin_login');
         }
     }
